@@ -38,6 +38,7 @@ dependencies:
     sdk: flutter
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
+  intl: ^0.20.2
   lottie: ^3.3.0
   random_string: ^2.3.1
   shared_preferences: ^2.3.4
@@ -68,7 +69,39 @@ flutter:
     - assets/shelly.jpg
     - assets/simba.jpg
     - assets/whispers.jpg
+    - assets/Bambi_happy.jpg
+    - assets/Bruno_happy.jpg
+    - assets/Bunny_happy.jpg
+    - assets/Shelly_happy.jpg
+    - assets/Simba_happy.jpg
+    - assets/Whispers_happy.jpg
+    - assets/Bambi_sad.jpg
+    - assets/Bruno_sad.jpg
+    - assets/Bunny_sad.jpg
+    - assets/Shelly_sad.jpg
+    - assets/Simba_sad.jpg
+    - assets/Whispers_sad.jpg
     - assets/fonts/play.ttf
+    - assets/pawn.png
+    - assets/queen.png
+    - assets/rook.png
+    - assets/king.png
+    - assets/bishop.png
+    - assets/knight.png
+    - assets/cookies.png
+    - assets/egg.png
+    - assets/hotdoggg.png
+    - assets/friess.png
+    - assets/burgerrr.png
+    - assets/pizzaaa.png
+    - assets/chess.png
+    - assets/tetris.png
+    - assets/minisweeper.png
+    - assets/trivia.png
+    - assets/maze.png
+    - assets/coin.png
+
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

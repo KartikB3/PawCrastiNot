@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:pawcrastinot/pages/home_Page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -24,7 +25,22 @@ class DatabaseService {
 
   //task add
   Future addTask(Map<String, dynamic> userMap, String id) async {
+    DateTime selectedDate = DateTime.parse(userMap["date"]);
+    Timestamp timestamp = Timestamp.fromDate(selectedDate);
+    userMap['date'] = timestamp;
     await FirebaseFirestore.instance.collection("Tasks").doc(id).set(userMap);
+  }
+
+  Stream<QuerySnapshot> getTaskForDate(String collection, DateTime date) {
+    DateTime startOfDay = DateTime(date.year, date.month, date.day, 0, 0, 0);
+    DateTime endOfDay = DateTime(date.year, date.month, date.day, 23, 59, 59);
+    Timestamp startTimestamp = Timestamp.fromDate(startOfDay);
+    Timestamp endTimestamp = Timestamp.fromDate(endOfDay);
+    return FirebaseFirestore.instance
+        .collection(collection)
+        .where('date', isGreaterThanOrEqualTo: startTimestamp)
+        .where('date', isLessThanOrEqualTo: endTimestamp)
+        .snapshots();
   }
 
   //getter fn for task
@@ -34,19 +50,22 @@ class DatabaseService {
         .snapshots();
   }
 
-  Future updatePetDetails(String petName, String petImage) async {
+  Future updatePetDetails(String petName, String petImage1,String petImage2) async {
     if (uid == null) {
       throw Exception("User id is null, cannot update pet details");
     }
     return await userCollection.doc(uid).update({
-      "happiness":0.5,
-      "hunger":0.7,
+      "coins" :100,
+      "happiness": 0.5,
+      "hunger": 0.7,
       "pet": {
         "name": petName,
-        "image": petImage,
+        "image_happy": petImage1,
+        "image_sad": petImage2
       },
     });
   }
+
 
   Future<String?> getPetName() async {
     try {
@@ -65,22 +84,40 @@ class DatabaseService {
     return null;
   }
 
-  Future<String?> getPetImage() async {
+  Future<String?> getPetImageHappy() async {
     try {
       DocumentSnapshot documentSnapshot = await userCollection.doc(uid).get();
       if (documentSnapshot.exists) {
         Map<String, dynamic>? userData =
             documentSnapshot.data() as Map<String, dynamic>?;
         var petData = userData?["pet"];
-        if (petData != null && petData["image"] != null) {
-          return petData["image"];
+        if (petData != null && petData["image_happy"] != null) {
+          return petData["image_happy"];
         }
       }
     } catch (err) {
-      print("Error Fetching pet image:${err}");
+      print("Error Fetching pet image happy:${err}");
     }
     return null;
   }
+
+    Future<String?> getPetImageSad() async {
+    try {
+      DocumentSnapshot documentSnapshot = await userCollection.doc(uid).get();
+      if (documentSnapshot.exists) {
+        Map<String, dynamic>? userData =
+            documentSnapshot.data() as Map<String, dynamic>?;
+        var petData = userData?["pet"];
+        if (petData != null && petData["image_sad"] != null) {
+          return petData["image_sad"];
+        }
+      }
+    } catch (err) {
+      print("Error Fetching pet image sad:${err}");
+    }
+    return null;
+  }
+
 
   Future<double?> getPetHappiness() async {
     try {

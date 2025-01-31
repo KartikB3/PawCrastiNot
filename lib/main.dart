@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pawcrastinot/chess/chess_board.dart';
 import 'package:pawcrastinot/helper/helper_function.dart';
+import 'package:pawcrastinot/minesweeper/minesweeper_board.dart';
 import 'package:pawcrastinot/pages/Login_Page.dart';
 import 'package:pawcrastinot/pages/MY_home_Page.dart';
 import 'package:pawcrastinot/pages/home_Page.dart';
+import 'package:pawcrastinot/pages/store_page.dart';
 import 'package:pawcrastinot/shared/webOptions.dart';
 import 'package:flutter/animation.dart';
+import 'package:random_string/random_string.dart';
 
 
 void main() async {

@@ -38,7 +38,8 @@ class _PetPickerPageState extends State<PetPickerPage> {
       try {
         await DatabaseService(uid: userId).updatePetDetails(
           selectedPet!,
-          "assets/${selectedPet!.toLowerCase()}.jpg",
+          "assets/${selectedPet!}_happy.jpg",
+          "assets/${selectedPet!}_sad.jpg"
         );
         showDialog(
             context: context,
