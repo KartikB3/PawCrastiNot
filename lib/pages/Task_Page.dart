@@ -200,50 +200,54 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            // gradient: LinearGradient(colors: [Colors.green, Colors.yellowAccent]),
-            color: Color.fromRGBO(255, 234, 206, 1)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            "TODAY".text.bold.size(40).textStyle(GoogleFonts.spicyRice(color: Color.fromRGBO(32, 70, 13, 1))).make().pOnly(left: 20,top: 10),
-            SizedBox(height: 20,),
-            calendar(),
-            SizedBox(height: 20,),
-            getWork(),
-            Center(
-              child: ConfettiWidget(
-                confettiController: confettiController,
-                blastDirectionality: BlastDirectionality.explosive,
-                numberOfParticles: 20,
-                gravity: 0.1,
-              ),
-            )
-          ],
+    return Container(
+            width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Scaffold(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+              // gradient: LinearGradient(colors: [Colors.green, Colors.yellowAccent]),
+              color: Color.fromRGBO(255, 234, 206, 1)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "TODAY".text.bold.size(40).textStyle(GoogleFonts.spicyRice(color: Color.fromRGBO(32, 70, 13, 1))).make().pOnly(left: 20,top: 10),
+              SizedBox(height: 20,),
+              calendar(),
+              SizedBox(height: 20,),
+              getWork(),
+              Center(
+                child: ConfettiWidget(
+                  confettiController: confettiController,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  numberOfParticles: 20,
+                  gravity: 0.1,
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: Vx.black,
-        child: const Icon(Icons.add, color: Vx.white),
-        onPressed: () {
-          openBox();
-        },
-      ),
-      appBar: AppBar(
-        title: Text("  PawCrastiNot"),
-        titleTextStyle: TextStyle(
-          fontSize: 40,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'play',
-          color: Color.fromRGBO(32, 72, 13, 1)
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          backgroundColor: Vx.black,
+          child: const Icon(Icons.add, color: Vx.white),
+          onPressed: () {
+            openBox();
+          },
         ),
-        backgroundColor: Colors.lightGreenAccent,
+        appBar: AppBar(
+          title: Text("  PawCrastiNot"),
+          titleTextStyle: TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'play',
+            color: Color.fromRGBO(32, 72, 13, 1)
+          ),
+          backgroundColor: Colors.lightGreenAccent,
+        ),
       ),
     );
   }

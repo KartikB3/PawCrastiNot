@@ -61,66 +61,70 @@ class _PetPickerPageState extends State<PetPickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pick Your Pet'),
-        backgroundColor: Colors.green,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.all(16),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: pets.length,
-              itemBuilder: (context, index) {
-                final pet = pets[index];
-                final isSelected = selectedPet == pet['name'];
-                return GestureDetector(
-                  onTap: () => _selectPet(pet['name']!),
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: isSelected ? Colors.green : Colors.grey,
-                        width: 3,
+    return Container(
+            width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Pick Your Pet'),
+          backgroundColor: Colors.green,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                padding: EdgeInsets.all(16),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: pets.length,
+                itemBuilder: (context, index) {
+                  final pet = pets[index];
+                  final isSelected = selectedPet == pet['name'];
+                  return GestureDetector(
+                    onTap: () => _selectPet(pet['name']!),
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: isSelected ? Colors.green : Colors.grey,
+                          width: 3,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(
+                          image: AssetImage(pet['image']!),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: AssetImage(pet['image']!),
-                        fit: BoxFit.cover,
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: Colors.black54,
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                          pet['name']!,
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
                     ),
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: Colors.black54,
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        pet['name']!,
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: _confirmSelection,
-              child: Text('Confirm Selection'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                disabledBackgroundColor: Colors.grey,
+                  );
+                },
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _confirmSelection,
+                child: Text('Confirm Selection'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  disabledBackgroundColor: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

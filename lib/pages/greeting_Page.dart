@@ -43,61 +43,65 @@ class _GreetingPageState extends State<GreetingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Greetings!',
-          style: TextStyle(
-            fontFamily: 'play',
-            fontSize: 20,
-          ),
-        ),
-      ),
-      body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/background_image.png'),
-              fit: BoxFit.cover,
+    return Container(
+            width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Greetings!',
+            style: TextStyle(
+              fontFamily: 'play',
+              fontSize: 20,
             ),
           ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    _displayedText,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: Colors.lightGreen,
-                      fontFamily: 'play',
+        ),
+        body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/background_image.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _displayedText,
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.lightGreen,
+                        fontFamily: 'play',
+                      ),
+                      textAlign: TextAlign.center,
+                      semanticsLabel: _fullText,
                     ),
-                    textAlign: TextAlign.center,
-                    semanticsLabel: _fullText,
-                  ),
-                  SizedBox(height: 30),
-                  GestureDetector(
-                    onTap:(){
-                      nextScreen(
-                        context,
-                        HomePage()
-                      );
-                    },
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 50,
-                      color: Colors.black26,
+                    SizedBox(height: 30),
+                    GestureDetector(
+                      onTap:(){
+                        nextScreen(
+                          context,
+                          HomePage()
+                        );
+                      },
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: 50,
+                        color: Colors.black26,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      );
+    );
   }
 }

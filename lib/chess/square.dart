@@ -32,8 +32,16 @@ if (isSelected) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: isWhite
+                        ? [Colors.brown.shade300, Colors.brown.shade500]
+                        : [Colors.brown.shade700, Colors.brown.shade900],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),),
         margin: EdgeInsets.all(isValidMove?8:0),
-        color: squareColor,
+        // color: squareColor,
         child: piece != null
             ? Image.asset(
                 piece!.imagePath,

@@ -48,41 +48,45 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/main_image1.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Center(
-            child: ScaleTransition(
-              scale: _scaleAnimation,
-              child: Image.asset(
-                'assets/pawtext.png',
-                width: 300,
-                height: 300,
+    return Container(
+            width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Image.asset(
+              'assets/main_image1.png',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Center(
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Image.asset(
+                  'assets/pawtext.png',
+                  width: 300,
+                  height: 300,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 40,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                nextScreen(context, LoginPage());
-              },
-              child: Icon(
-                Icons.arrow_forward,
-                size: 65,
-                color: Colors.black87,
+            Positioned(
+              bottom: 40,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  nextScreen(context, LoginPage());
+                },
+                child: Icon(
+                  Icons.arrow_forward,
+                  size: 65,
+                  color: Colors.black87,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

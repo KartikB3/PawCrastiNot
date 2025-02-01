@@ -14,7 +14,20 @@ class MyBomb extends StatelessWidget {
     return GestureDetector(
       onTap: function,
       child: Container(
-        color:revealed? Colors.grey[800]:Colors.grey[400],
+        decoration: BoxDecoration(
+          gradient: revealed
+              ? LinearGradient(
+                  colors: [Colors.red, Colors.orange.shade600],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : LinearGradient(
+                  colors: [Colors.grey.shade400, Colors.grey.shade300],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+          borderRadius: BorderRadius.circular(8),
+        ),
       ).p(2),
     );
   }

@@ -6,6 +6,8 @@ import 'package:pawcrastinot/chess/dead_pieces.dart';
 import 'package:pawcrastinot/chess/helper_methods.dart';
 import 'package:pawcrastinot/chess/piece.dart';
 import 'package:pawcrastinot/chess/square.dart';
+import 'package:pawcrastinot/pages/games_page.dart';
+import 'package:pawcrastinot/widgets/widgets.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ChessBoard extends StatefulWidget {
@@ -502,7 +504,7 @@ class _GameBoardState extends State<ChessBoard> {
           .get();
       int newCoins = documentSnapshot['coins'] ?? 100;
       final userId = FirebaseAuth.instance.currentUser!.uid;
-      newCoins = (_coins + increment);
+      newCoins = (newCoins + increment);
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
@@ -520,8 +522,13 @@ class _GameBoardState extends State<ChessBoard> {
     return Container(
       width: screenWidth,
       height: screenheight,
+       decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.blueGrey.shade900, Colors.blueGrey.shade700],)),
       child: Scaffold(
-          backgroundColor: foregroundColor,
+          backgroundColor: Colors.transparent,
           body: Column(
             children: [
               SizedBox(
@@ -586,23 +593,16 @@ class _GameBoardState extends State<ChessBoard> {
               ),
             ],
           ),
-          appBar: AppBar(
-            title: Text(
-              "  PawCrastiNot",
-              style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: Color.fromRGBO(32, 70, 13, 1.00),
-                  shadows: [
-                    Shadow(
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                        color: Colors.black)
-                  ]),
-            ),
-            backgroundColor: Color.fromRGBO(149, 249, 140, 1.00),
-          )),
+        appBar: AppBar(
+          backgroundColor:Colors.amber.shade700,
+          title: Text("CHESS",style: TextStyle(fontWeight: FontWeight.bold),),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              nextScreen(context, GameMenuScreen());
+            },
+          ),
+        ),),
     );
   }
 }

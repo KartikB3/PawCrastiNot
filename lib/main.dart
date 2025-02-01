@@ -8,8 +8,10 @@ import 'package:pawcrastinot/pages/Login_Page.dart';
 import 'package:pawcrastinot/pages/MY_home_Page.dart';
 import 'package:pawcrastinot/pages/home_Page.dart';
 import 'package:pawcrastinot/pages/store_page.dart';
+import 'package:pawcrastinot/ping_pong/pong_page.dart';
 import 'package:pawcrastinot/shared/webOptions.dart';
 import 'package:flutter/animation.dart';
+import 'package:pawcrastinot/tetris/tetris_page.dart';
 import 'package:random_string/random_string.dart';
 
 
@@ -59,7 +61,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: _isSignedIn ? HomePage() : MyHomePage()
+        home: _isSignedIn?HomePage():LoginPage()
         );
   }
 }

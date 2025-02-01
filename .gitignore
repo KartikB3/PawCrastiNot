@@ -11,6 +11,10 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+*.log
+*.lock
+pubspec.lock
+pubspec_overrides.yaml
 
 # IntelliJ related
 *.iml
@@ -21,7 +25,8 @@ migrate_working_dir/
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -32,6 +37,17 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.dart_tool/
+.build/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.melos/
+*.dart.js
+*.js.map
+*.npm_debug.log*
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +59,48 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Pods/
+macos/.symlinks/
+macos/.dart_tool/
+
+# iOS
+ios/Flutter/
+ios/.symlinks/
+ios/Pods/
+ios/.dart_tool/
+ios/.generated/
+*.mode1v3
+*.mode2v3
+*.pbxuser
+!default.pbxuser
+
+# Android
+android/.cxx/
+android/app/debug.keystore
+android/gradle/
+android/local.properties
+android/.idea/
+android/.dart_tool/
+*.iml
+
+# Firebase
+firebase.json
+.firebase/
+firebase-debug.log
+firebase-debug.*
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+web/firebase-config.js
+
+# Windows
+windows/.dart_tool/
+windows/flutter/ephemeral/
+windows/CMakeCache.txt
+windows/CMakeFiles/
+
+# Web
+web/.dart_tool/
+build/
