@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:pawcrastinot/pages/games_page.dart';
 import 'package:pawcrastinot/tetris/piece.dart';
 import 'package:pawcrastinot/tetris/pixel.dart';
@@ -24,16 +25,20 @@ class TetrisPage extends StatefulWidget {
 class _TetrisPageState extends State<TetrisPage> {
   Piece currentPiece = Piece(type: Tetromino.L);
   bool gameOver = false;
+  bool gameStarted = false;
   int currentScore = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    startGame();
+    // startGame();
   }
 
   void startGame() {
+    setState(() {
+      gameStarted = true;
+    });
     currentPiece.initializePiece();
 
     Duration frameRate = const Duration(milliseconds: 400);
@@ -225,65 +230,75 @@ class _TetrisPageState extends State<TetrisPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.82,
-              child: Expanded(
-                child: GridView.builder(
-                    itemCount: rowLength * colLength,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: rowLength),
-                    itemBuilder: (context, index) {
-                      int row = (index / rowLength).floor();
-                      int col = index % rowLength;
-                      if (currentPiece.position.contains(index)) {
-                        return MyPixel(
-                          color: currentPiece.color,
-                        );
-                      } else if (gameBoard[row][col] != null) {
-                        final Tetromino? tetrominoType = gameBoard[row][col];
-                        return MyPixel(
-                          color: tetroominoColors[tetrominoType],
-                        );
-                      } else {
-                        return MyPixel(
-                          color: Colors.grey[900],
-                        );
-                      }
-                    }),
+    return GestureDetector(
+      onTap: () {
+        if (!gameStarted) {
+          startGame();
+        }
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Column(
+            children: [
+              Expanded(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  return Container(
+                    height: constraints.maxHeight*0.8,
+                    child: GridView.builder(
+                        itemCount: rowLength * colLength,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: rowLength),
+                        itemBuilder: (context, index) {
+                          int row = (index / rowLength).floor();
+                          int col = index % rowLength;
+                          if (currentPiece.position.contains(index)) {
+                            return MyPixel(
+                              color: currentPiece.color,
+                            );
+                          } else if (gameBoard[row][col] != null) {
+                            final Tetromino? tetrominoType = gameBoard[row][col];
+                            return MyPixel(
+                              color: tetroominoColors[tetrominoType],
+                            );
+                          } else {
+                            return MyPixel(
+                              color: Colors.grey[900],
+                            );
+                          }
+                        }),
+                  );
+                }),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(onPressed: moveLeft, icon: Icon(Icons.arrow_left)),
-                IconButton(
-                    onPressed: rotatePiece, icon: Icon(Icons.rotate_right)),
-                IconButton(onPressed: moveRight, icon: Icon(Icons.arrow_right))
-              ],
-            )
-          ],
-        ),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(39),
-          child: AppBar(
-            backgroundColor: Colors.deepPurple,
-            title: Text(
-              "TETRIS   Score:${currentScore}",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                nextScreen(context, GameMenuScreen());
-              },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(onPressed: moveLeft, icon: Icon(Icons.arrow_left)),
+                  IconButton(
+                      onPressed: rotatePiece, icon: Icon(Icons.rotate_right)),
+                  IconButton(
+                      onPressed: moveRight, icon: Icon(Icons.arrow_right))
+                ],
+              )
+            ],
+          ),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(39),
+            child: AppBar(
+              backgroundColor: Colors.deepPurple,
+              title: Text(
+                "TETRIS   Score:${currentScore}",
+                style: TextStyle(color: Colors.white),
+              ),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  nextScreen(context, GameMenuScreen());
+                },
+              ),
             ),
           ),
         ),

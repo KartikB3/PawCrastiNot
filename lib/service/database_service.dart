@@ -56,7 +56,7 @@ class DatabaseService {
     }
     return await userCollection.doc(uid).update({
       "coins" :100,
-      "happiness": 0.5,
+      "happiness": 0.3,
       "hunger": 0.7,
       "pet": {
         "name": petName,

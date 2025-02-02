@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TriviaPage extends StatefulWidget {
@@ -64,6 +66,7 @@ class _TriviaPageState extends State<TriviaPage> {
   }
 
   void _showScore() {
+    updateCoins(100);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -85,12 +88,31 @@ class _TriviaPageState extends State<TriviaPage> {
     );
   }
 
+  Future<void> updateCoins(int increment) async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      int newCoins = documentSnapshot['coins'] ?? 100;
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      newCoins = (newCoins + increment);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'coins': newCoins});
+      setState(() {});
+    } catch (err) {
+      print("Cant update coins:$err");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentQuestion = _questions[_currentQuestionIndex];
 
     return Container(
-            width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
         backgroundColor: Color(0xFFFAF0E1),
@@ -119,7 +141,8 @@ class _TriviaPageState extends State<TriviaPage> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent,
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

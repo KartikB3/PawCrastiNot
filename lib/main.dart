@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: _isSignedIn?HomePage():LoginPage()
+        home: _isSignedIn?HomePage():MyHomePage()
         );
   }
 }

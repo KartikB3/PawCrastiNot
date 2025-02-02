@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MazePage extends StatefulWidget {
@@ -112,6 +114,7 @@ class _MazePageState extends State<MazePage> {
   }
 
   void _showWinDialog() {
+    updateCoins(100);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -130,12 +133,31 @@ class _MazePageState extends State<MazePage> {
     );
   }
 
+  Future<void> updateCoins(int increment) async {
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      int newCoins = documentSnapshot['coins'] ?? 100;
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      newCoins = (newCoins + increment);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'coins': newCoins});
+      setState(() {});
+    } catch (err) {
+      print("Cant update coins:$err");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<List<int>> maze = levels[currentLevel];
 
     return Container(
-            width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Scaffold(
         backgroundColor: Color(0xFFF5E1C0),

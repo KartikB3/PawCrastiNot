@@ -531,65 +531,58 @@ class _GameBoardState extends State<ChessBoard> {
           backgroundColor: Colors.transparent,
           body: Column(
             children: [
-              SizedBox(
-                height: 110,
-                child: Expanded(
-                    flex: 1,
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 8),
-                      itemBuilder: (context, index) => DeadPiece(
-                        imagePath: whitePiecesTaken[index].imagePath,
-                        isWhite: true,
-                      ),
-                      itemCount: whitePiecesTaken.length,
-                    )),
+              Container(
+                height:MediaQuery.of(context).size.height * 0.12,
+                child: GridView.builder(
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 8),
+                  itemBuilder: (context, index) => DeadPiece(
+                    imagePath: whitePiecesTaken[index].imagePath,
+                    isWhite: true,
+                  ),
+                  itemCount: whitePiecesTaken.length,
+                ),
               ),
               (checkStatus
                   ? "CHECK!".text.bold.red700.size(16).make()
                   : "".text.make()),
-              SizedBox(
-                height: 420,
-                child: Expanded(
-                  flex: 3,
-                  child: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 8),
-                      itemCount: 64,
-                      itemBuilder: (context, index) {
-                        int row = index ~/ 8;
-                        int col = index % 8;
-                        bool isSelected =
-                            selectedRow == row && selectedCol == col;
-                        bool isValidMove = validMoves.any((position) =>
-                            position[0] == row && position[1] == col);
-                        return Square(
-                          isValidMove: isValidMove,
-                          isSelected: isSelected,
-                          isWhite: isWhite(index),
-                          piece: board[row][col],
-                          onTap: () {
-                            pieceSelected(row, col);
-                          },
-                        );
-                      }),
-                ),
+              Expanded(
+                flex: 5,
+                child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 8),
+                    itemCount: 64,
+                    itemBuilder: (context, index) {
+                      int row = index ~/ 8;
+                      int col = index % 8;
+                      bool isSelected =
+                          selectedRow == row && selectedCol == col;
+                      bool isValidMove = validMoves.any((position) =>
+                          position[0] == row && position[1] == col);
+                      return Square(
+                        isValidMove: isValidMove,
+                        isSelected: isSelected,
+                        isWhite: isWhite(index),
+                        piece: board[row][col],
+                        onTap: () {
+                          pieceSelected(row, col);
+                        },
+                      );
+                    }),
               ),
-              SizedBox(
-                height: 98,
-                child: Expanded(
-                    flex: 1,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 8),
-                      itemBuilder: (context, index) => DeadPiece(
-                        imagePath: blackPiecesTaken[index].imagePath,
-                        isWhite: false,
-                      ),
-                      itemCount: blackPiecesTaken.length,
-                    )),
+              Container(
+                height: MediaQuery.of(context).size.height*0.12,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 8),
+                  itemBuilder: (context, index) => DeadPiece(
+                    imagePath: blackPiecesTaken[index].imagePath,
+                    isWhite: false,
+                  ),
+                  itemCount: blackPiecesTaken.length,
+                ),
               ),
             ],
           ),
